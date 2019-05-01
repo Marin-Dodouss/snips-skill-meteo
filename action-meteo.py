@@ -12,7 +12,10 @@ import pytz
 import json
 
 import requests
+import sys  
 
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 fromtimestamp = datetime.datetime.fromtimestamp
 
@@ -205,7 +208,7 @@ def intent_received(hermes, intent_message):
         else:
             if weather_forecast["now"]:
 
-                sentence = "Il fait {0}".format(weather_forecast["temperature"])
+                sentence = "Il fait {0} degrés".format(weather_forecast["temperature"])
                 if not weather_forecast["here"]:
                     sentence += weather_forecast["inLocation"]
 
@@ -228,7 +231,7 @@ def intent_received(hermes, intent_message):
                 sentence += "."
 
                 if weather_forecast["rainTime"] and not weather_forecast["moreThanADay"]:
-                    sentence += " Il risque de pleuvoir à {0}.".format(verbalise_hour(weather_forecast["rainTime"]))
+                    sentence += " Il risque de pleuvoir à {0} heures.".format(verbalise_hour(weather_forecast["rainTime"]))
 
         hermes.publish_end_session(intent_message.session_id, sentence)
 
